@@ -2,7 +2,6 @@ package br.tech.ada.stock.controller;
 
 import br.tech.ada.stock.dto.UserDTO;
 import br.tech.ada.stock.model.User;
-import br.tech.ada.stock.repository.UserRepository;
 import br.tech.ada.stock.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +41,17 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody User user) {
-        log.info("User to be updated : " + user.toString());
-        User u = userService.saveOrUpdate(user);
-        UserDTO DTO = new UserDTO(u);
-        return ResponseEntity.ok(DTO);
+    @PostMapping("/update/{id}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody User user, @PathVariable Long id) {
+        Optional<User> userToBeUpdated = userService.findById(id);
+        if(userToBeUpdated.isPresent()){
+            userToBeUpdated.get().setEmail(user.getEmail());
+            userToBeUpdated.get().setPassword(user.getPassword());
+            userService.saveOrUpdate(userToBeUpdated.get());
+            UserDTO DTO = new UserDTO(userToBeUpdated.get());
+            return ResponseEntity.ok(DTO);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
 }

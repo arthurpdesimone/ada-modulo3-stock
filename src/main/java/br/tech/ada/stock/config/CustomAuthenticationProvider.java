@@ -2,6 +2,7 @@ package br.tech.ada.stock.config;
 
 import br.tech.ada.stock.model.User;
 import br.tech.ada.stock.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
@@ -26,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        System.out.println("email "+email+" password "+password);
+        log.info("Email: "+email+" password: "+password);
         User user = userService.findByEmailAndPassword(email,password);
 
         if(user == null){
