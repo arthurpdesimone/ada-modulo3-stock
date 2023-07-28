@@ -16,4 +16,14 @@ public class Stock {
     String ticker;
     Date timestamp;
     Double close;
+
+    public Stock(String ticker, Date d, Double closeValue) {
+        this.ticker = ticker;
+        this.timestamp = d;
+        this.close = closeValue;
+    }
+
+    public Stock() {
+
+    }
 }
