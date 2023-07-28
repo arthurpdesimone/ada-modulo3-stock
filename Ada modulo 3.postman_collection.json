@@ -84,6 +84,42 @@
 			"response": []
 		},
 		{
+			"name": "List Stock",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "teste",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "arthurpdesimone@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/stocks/list/PETR3.SA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"list",
+						"PETR3.SA"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Update",
 			"request": {
 				"auth": {
