@@ -13,6 +13,7 @@ import java.io.StringReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class StockService {
@@ -43,6 +44,10 @@ public class StockService {
             stockRepository.save(stock);
         }
         timeSeries.close();
+    }
+
+    public List<Stock> listStock(String ticker){
+        return stockRepository.findByTicker(ticker);
     }
 
 
