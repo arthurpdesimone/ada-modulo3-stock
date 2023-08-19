@@ -5,6 +5,8 @@ import br.tech.ada.stock.repository.StockRepository;
 import br.tech.ada.stock.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -50,5 +52,7 @@ public class StockService {
         return stockRepository.findByTicker(ticker);
     }
 
-
+    public Page<Stock> listStockByPagination(String ticker, Pageable pageable){
+        return stockRepository.findByTicker(ticker, pageable);
+    }
 }

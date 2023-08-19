@@ -8,6 +8,9 @@ import br.tech.ada.stock.service.UserService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,6 +34,13 @@ public class StockController {
     @GetMapping("/list/{ticker}")
     public ResponseEntity<?> listStock(@PathVariable String ticker) {
         List<Stock> stockList = stockService.listStock(ticker);
+        return new ResponseEntity(stockList,HttpStatus.OK);
+    }
+
+    @GetMapping("/list/{ticker}/{page}")
+    public ResponseEntity<?> listStockPageable(@PathVariable String ticker, @PathVariable Integer page) {
+        Pageable pageable = PageRequest.of(page,20);
+        Page<Stock> stockList = stockService.listStockByPagination(ticker,pageable);
         return new ResponseEntity(stockList,HttpStatus.OK);
     }
 }
