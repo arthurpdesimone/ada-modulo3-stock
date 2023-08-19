@@ -1,6 +1,7 @@
 package br.tech.ada.stock.controller;
 
 import br.tech.ada.stock.dto.UserDTO;
+import br.tech.ada.stock.exception.StockNotFoundException;
 import br.tech.ada.stock.model.Stock;
 import br.tech.ada.stock.model.User;
 import br.tech.ada.stock.service.StockService;
@@ -27,7 +28,7 @@ public class StockController {
     @Autowired
     private StockService stockService;
     @PostMapping("/insert/{ticker}")
-    public ResponseEntity insertStock(@PathVariable String ticker) throws IOException, ParseException {
+    public ResponseEntity insertStock(@PathVariable String ticker) throws IOException, ParseException, StockNotFoundException {
         stockService.downloadStock(ticker);
         return ResponseEntity.ok().build();
     }

@@ -1,5 +1,6 @@
 package br.tech.ada.stock.service;
 
+import br.tech.ada.stock.exception.StockNotFoundException;
 import br.tech.ada.stock.model.Stock;
 import br.tech.ada.stock.repository.StockRepository;
 import br.tech.ada.stock.utils.Utils;
@@ -28,8 +29,11 @@ public class StockService {
     @Autowired
     private StockRepository stockRepository;
 
-    public void downloadStock(String ticker) throws IOException, ParseException {
+    public void downloadStock(String ticker) throws IOException, ParseException, StockNotFoundException {
         String stockString = Utils.downloadToString(URL+"TIME_SERIES_DAILY&symbol="+ticker+"&outputsize=full&datatype=csv&apikey="+apiKey);
+        if(stockString.contains("Error")){
+            throw new StockNotFoundException();
+        }
         /** Stock download*/
         BufferedReader timeSeries = new BufferedReader(new StringReader(stockString));
         timeSeries.readLine(); /** Skip the first line */
